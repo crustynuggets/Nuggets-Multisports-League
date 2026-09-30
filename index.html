@@ -149,7 +149,7 @@ function render(){
   $('seasonLabel').textContent=data.season.toUpperCase();
   $('homeBoard').innerHTML=boardRows();$('fullBoard').innerHTML=boardRows();
   const byDate=[...data.events].sort((a,b)=>b.date.localeCompare(a.date));
-  $('recentEvents').innerHTML=byDate.slice(0,4).map(eventCard).join('')||'<div class="empty">No events yet.</div>';
+  $('recentEvents').innerHTML=byDate.filter(isDone).slice(0,4).map(eventCard).join('')||'<div class="empty">No completed events yet.</div>';
   $('allEvents').innerHTML=byDate.map(eventCard).join('')||'<div class="empty">No events yet.</div>';
   const next=data.events.filter(e=>e.status!=='completed').sort((a,b)=>a.date.localeCompare(b.date))[0];
   $('nextEvent').innerHTML=next?`<div style="display:flex;gap:13px;align-items:center"><div class="thumb" style="width:100px;flex-shrink:0;font-size:35px">${next.photos?.[0]?`<img src="${esc(next.photos[0])}" alt="">`:esc(next.icon||'🏅')}</div><div><h3>${esc(next.name)}</h3><p class="muted small">${fmtDate(next.date)}${next.venue?' · '+esc(next.venue):''}</p></div></div><div class="rules" style="margin:14px 0">${ruleText(next.rules)}</div>${challengeText(next)}<button class="primary" data-event="${esc(next.id)}">View event details →</button>`:'<p class="muted">No upcoming events yet.</p><button class="primary editonly" data-view="eventform">＋ Add event</button>';
