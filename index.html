@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#07152a"><title>Nuggets MultiSports League</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#071326;--panel:#0c1d34;--panel2:#102642;--line:#203b5d;--text:#eef5ff;--muted:#9fb2ca;--blue:#2384ff;--gold:#ffc83d;--green:#2bc48a;--radius:15px}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:9px 13px;background:#102744;color:var(--text)}button:hover{filter:brightness(1.16)}button:disabled{opacity:.6;cursor:wait}button.primary{background:var(--blue);border-color:var(--blue);color:white;font-weight:650}.app{min-height:100vh;display:grid;grid-template-columns:230px 1fr}.sidebar{background:#08182c;border-right:1px solid var(--line);padding:22px 15px;display:flex;flex-direction:column;gap:22px}.brand{display:flex;gap:10px;align-items:center;font-size:19px;font-weight:800}.brand .cup{font-size:27px;color:var(--gold)}.tag{color:var(--muted);font-size:12px;margin-left:38px;margin-top:-20px}.nav{display:grid;gap:6px}.nav button{text-align:left;background:transparent;border-color:transparent;padding:11px 12px;color:#c8d5e6}.nav button.active,.nav button:hover{background:#163457;border-color:#24496f}.nav button span{display:inline-block;width:29px}.sidefoot{margin-top:auto;color:var(--muted);font-size:12px;padding:8px}.main{min-width:0}.hero{padding:30px clamp(20px,4vw,48px);background:linear-gradient(90deg,rgba(5,19,39,.96),rgba(7,24,46,.75)),radial-gradient(ellipse at 75% 0%,#28517d,#0a1a30 60%);border-bottom:1px solid var(--line)}.hero-top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.hero h1{font-size:clamp(28px,4vw,42px);line-height:1.1;margin:12px 0 8px}.hero p{color:#bdcce0;margin:0}.content{padding:24px clamp(16px,3vw,32px);max-width:1500px;margin:auto}.layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.9fr);gap:18px}.stack{display:grid;gap:18px;align-content:start}.card{background:linear-gradient(145deg,#0c1d34,#0a1a2e);border:1px solid var(--line);border-radius:var(--radius);padding:18px;min-width:0}.cardhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}.card h2{font-size:19px;margin:0}.card h3{font-size:16px;margin:0}.muted{color:var(--muted)}.small{font-size:12px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;white-space:nowrap}th,td{text-align:left;padding:12px 9px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:12px;font-weight:600}td:last-child,th:last-child{text-align:right}.player{display:flex;align-items:center;gap:10px}.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:750;color:white;flex-shrink:0;background:#2876dc}.eventrow{display:grid;grid-template-columns:94px minmax(0,1fr) auto;gap:13px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.eventrow:last-child{border:0}.thumb{height:72px;border-radius:10px;background:linear-gradient(135deg,#1b5883,#15304d);display:grid;place-items:center;font-size:28px;overflow:hidden}.thumb img{width:100%;height:100%;object-fit:cover}.eventrow p{margin:3px 0;color:var(--muted);font-size:12px}.eventtitle{font-weight:700}.pill{display:inline-block;background:#143658;color:#bcdcff;padding:3px 8px;border-radius:999px;font-size:11px}.rules{display:grid;gap:8px}.ruleline{display:flex;justify-content:space-between;gap:10px;color:#d2dfef}.ruleline b{color:white}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{border:1px solid var(--line);border-radius:10px;padding:13px}.stat strong{display:block;font-size:25px;margin-top:3px}.playersgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}.playerbox{border:1px solid var(--line);border-radius:12px;padding:13px;display:flex;gap:10px;align-items:center}.view{display:none}.view.active{display:block}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.field{display:grid;gap:5px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:var(--muted)}input,select,textarea{width:100%;padding:10px 11px;background:#07172a;color:var(--text);border:1px solid var(--line);border-radius:9px;min-width:0}textarea{min-height:85px;resize:vertical}.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.empty{padding:24px;text-align:center;color:var(--muted)}.eventdetail{display:grid;gap:16px}.scoregrid{display:grid;grid-template-columns:minmax(0,1fr) 110px 110px;gap:8px;align-items:center}.scorehead{font-size:12px;color:var(--muted);padding-bottom:5px}.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}.photo-grid img{width:100%;height:130px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}.notice{background:#102b45;border:1px solid #24496f;padding:12px;border-radius:10px;color:#c6ddf6;font-size:13px}.mobilebar{display:none}.hidden{display:none!important}
+body.readonly .editonly{display:none!important}.syncstatus{font-size:12px;color:var(--muted)}
+@media(max-width:850px){.app{grid-template-columns:1fr}.sidebar{display:none}.mobilebar{display:flex;gap:5px;overflow:auto;padding:8px;background:#08182c;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}.mobilebar button{white-space:nowrap;padding:8px 10px;font-size:12px}.layout{grid-template-columns:1fr}.hero{padding:23px 18px}.content{padding:16px 12px}.card{padding:14px}.eventrow{grid-template-columns:70px minmax(0,1fr);}.eventrow .rowaction{grid-column:2}.thumb{height:65px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.scoregrid{grid-template-columns:minmax(0,1fr) 75px 75px;gap:6px}th,td{padding:10px 6px}}
+</style></head>
+<body class="readonly"><div class="app"><aside class="sidebar"><div><div class="brand"><span class="cup">🏆</span> Nuggets MultiSports League</div><div class="tag"></div></div><nav class="nav" id="sideNav"><button class="active" data-view="home"><span>⌂</span> Home</button><button data-view="leaderboard"><span>🏆</span> Leaderboard</button><button data-view="events"><span>▦</span> Events</button><button data-view="players"><span>♟</span> Players</button><button data-view="settings"><span>⚙</span> Rules & Settings</button></nav><div class="nav"><button class="editonly" data-view="eventform"><span>＋</span> Add New Event</button><button class="editonly" data-view="players"><span>☺</span> Manage Players</button></div><div class="sidefoot">Good people. Great sports.<br>Great times.</div></aside><main class="main"><nav class="mobilebar" id="mobileNav"><button data-view="home">⌂ Home</button><button data-view="leaderboard">🏆 Board</button><button data-view="events">▦ Events</button><button data-view="players">♟ Players</button><button data-view="settings">⚙ Settings</button><button class="editonly" data-view="eventform">＋ Add event</button></nav><header class="hero"><div class="hero-top"><span class="pill" id="seasonLabel">SEASON 1</span><div class="actions"><span class="syncstatus" id="syncStatus"></span><button id="loginBtn" data-view="settings">Admin log in</button><button id="exportBtn">Export backup ↓</button></div></div><h1 id="heroTitle">Nuggets MultiSports League</h1><p>Multi-sport. Weekly points. Eternal bragging rights.</p></header><div class="content">
+<section class="view active" id="view-home"><div class="layout"><div class="stack"><div class="card"><div class="cardhead"><h2>🏆 Overall leaderboard</h2><select id="boardSort" style="width:auto"><option value="points">Total points</option><option value="wins">Event wins</option><option value="name">Name A-Z</option></select></div><div class="tablewrap"><table><thead><tr><th>#</th><th>Player</th><th>Events</th><th>Wins</th><th>Points</th></tr></thead><tbody id="homeBoard"></tbody></table></div></div><div class="card"><div class="cardhead"><h2>▦ Recent events</h2><button data-view="events">View all →</button></div><div id="recentEvents"></div></div></div><div class="stack"><div class="card"><div class="cardhead"><h2>📅 Next event</h2><span class="pill">UP NEXT</span></div><div id="nextEvent"></div></div><div class="card"><div class="cardhead"><h2>📊 Season info</h2></div><div class="stats" id="seasonStats"></div><hr style="border:0;border-top:1px solid var(--line);margin:16px 0"><h3>Scoring rules</h3><p class="muted small">Each event has its own scoring rules. Points are added to the season total.</p><button class="editonly" data-view="settings">Manage default rules →</button></div><div class="card"><div class="cardhead"><h2>♟ Players</h2><button data-view="players">View all →</button></div><div id="homePlayers" class="playersgrid"></div></div></div></div></section>
+<section class="view" id="view-leaderboard"><div class="card"><div class="cardhead"><h2>🏆 Season leaderboard</h2><div class="actions"><button id="exportCsv">Download CSV</button><button class="primary editonly" data-view="eventform">＋ Add results</button></div></div><p class="muted">Cumulative points across every completed event.</p><div class="tablewrap"><table><thead><tr><th>Rank</th><th>Player</th><th>Events</th><th>1st places</th><th>Total points</th></tr></thead><tbody id="fullBoard"></tbody></table></div></div></section>
+<section class="view" id="view-events"><div class="card"><div class="cardhead"><h2>▦ All events</h2><button class="primary editonly" data-view="eventform">＋ Add event</button></div><div id="allEvents"></div></div></section>
+<section class="view" id="view-eventform"><div class="card"><div class="cardhead"><h2 id="eventFormTitle">＋ Create an event</h2><button data-view="events">Cancel</button></div><form id="eventForm"><input id="eventId" type="hidden"><div class="formgrid"><div class="field"><label for="eventName">Event name</label><input id="eventName" required placeholder="Mini golf"></div><div class="field"><label for="eventDate">Date</label><input id="eventDate" type="date" required></div><div class="field"><label for="eventVenue">Venue</label><input id="eventVenue" placeholder="Course / venue"></div><div class="field"><label for="eventStatus">Status</label><select id="eventStatus"><option value="upcoming">Upcoming</option><option value="completed">Completed</option></select></div><div class="field full"><label for="eventNotes">Event notes / highlights</label><textarea id="eventNotes" placeholder="Big moments, close finishes, best banter..."></textarea></div><div class="field full"><label for="eventPhotos">Photos</label><input id="eventPhotos" type="file" accept="image/*" multiple><span class="muted small">Photos are shrunk automatically and uploaded to the league's shared storage.</span></div></div><hr style="border:0;border-top:1px solid var(--line);margin:20px 0"><div class="cardhead"><h3>Scoring for this event</h3><button type="button" id="resetScoring">Use default rules</button></div><p class="muted small">Set the points for each finishing position. You can change these for every event.</p><div class="formgrid" id="scoringFields"></div><div class="field" style="margin-top:12px"><label><input type="checkbox" id="eventCompleted" style="width:auto;margin-right:8px">Event is completed, include results in leaderboard</label></div><div class="actions" style="margin-top:18px"><button class="primary" type="submit" id="saveEventBtn">Save event</button><button type="button" id="deleteEvent" class="hidden">Delete event</button></div></form></div><div class="card" id="resultsEditor" style="margin-top:18px"></div></section>
+<section class="view" id="view-players"><div class="card"><div class="cardhead"><h2>♟ League players</h2><button class="primary editonly" id="addPlayerBtn">＋ Add player</button></div><form id="playerForm" class="hidden"><div class="formgrid"><div class="field"><label>Player name</label><input id="playerName" required placeholder="Full name"></div><div class="field"><label>Nickname (optional)</label><input id="playerNick" placeholder="Nickname"></div></div><div class="actions" style="margin-top:12px"><button class="primary" type="submit">Save player</button><button type="button" id="cancelPlayer">Cancel</button></div></form><div id="playersList" class="playersgrid"></div></div></section>
+<section class="view" id="view-settings">
+<div class="card" id="accountCard" style="margin-bottom:18px"><div class="cardhead"><h2>🔑 Admin access</h2></div>
+<div id="notConfigured" class="notice hidden">This site isn't connected to Supabase yet, so changes only save in this browser. Paste your Supabase URL and key into the top of the script in index.html to make the league shared.</div>
+<form id="loginForm"><p class="muted small">Anyone with the link can view the league. Only admins can add events, enter results and upload photos.</p><div class="formgrid"><div class="field"><label for="loginEmail">Email</label><input id="loginEmail" type="email" required autocomplete="username"></div><div class="field"><label for="loginPass">Password</label><input id="loginPass" type="password" required autocomplete="current-password"></div></div><div class="actions" style="margin-top:12px"><button class="primary" type="submit">Log in</button></div></form>
+<div id="loggedInBox" class="hidden"><p>Logged in as <b id="adminEmail"></b>. You can edit the league.</p><button id="logoutBtn">Log out</button></div></div>
+<div class="card editonly"><div class="cardhead"><h2>⚙ League settings</h2></div><form id="settingsForm"><div class="formgrid"><div class="field"><label>League name</label><input id="leagueName"></div><div class="field"><label>Season name</label><input id="seasonName"></div><div class="field"><label>Default points for 1st place</label><input id="default1" type="number" required></div><div class="field"><label>Default points for 2nd place</label><input id="default2" type="number" required></div><div class="field"><label>Default points for 3rd place</label><input id="default3" type="number" required></div><div class="field"><label>Default participation points</label><input id="defaultOther" type="number" required></div></div><p class="muted small">These are the starting rules for new events. Each event can have different scoring.</p><button class="primary" type="submit">Save settings</button></form><hr style="border:0;border-top:1px solid var(--line);margin:22px 0"><h3>Data and sharing</h3><p class="muted">League data and photos are stored in Supabase, so everyone with the link sees the same thing. Export a backup every now and then just in case.</p><div class="actions"><button id="migrateLocal">Move this browser's old data to the cloud</button><button id="importBtn">Import backup</button><input id="importFile" class="hidden" type="file" accept="application/json"><button id="resetDemo">Reset to sample data</button><button id="clearAll">Delete all league data</button></div><p class="muted small">Anyone with the link can view the league, so don't enter private or sensitive information.</p></div></section>
+<section class="view" id="view-eventdetail"><div class="card"><div class="cardhead"><button data-view="events">← Events</button><div class="actions editonly"><button id="editCurrent">Edit event</button><button id="deleteCurrent">Delete</button></div></div><div id="eventDetail"></div></div></section>
+</div></main></div>
+<script>
+// ===== 1. PASTE YOUR SUPABASE DETAILS HERE =====
+const SUPABASE_URL = 'https://YOUR-PROJECT-ID.supabase.co';
+const SUPABASE_KEY = 'YOUR-ANON-OR-PUBLISHABLE-KEY';
+// ===============================================
+
+const LEAGUE_ID = 'main', BUCKET = 'photos', OLD_KEY = 'nmlLeagueData_v1';
+const configured = !SUPABASE_URL.includes('YOUR-PROJECT') && !SUPABASE_KEY.startsWith('YOUR-');
+const sb = configured ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+const defaults={league:'Nuggets MultiSports League',season:'Season 1',rules:{first:10,second:7,third:5,other:2},players:[{id:'p1',name:'Jack H',nick:'',color:'#f5bd2f'},{id:'p2',name:'Miles N',nick:'',color:'#2876dc'},{id:'p3',name:'Alex L',nick:'',color:'#c28a55'},{id:'p4',name:'Tom S',nick:'',color:'#16a879'},{id:'p5',name:'Chris R',nick:'',color:'#8b61c2'},{id:'p6',name:'Ben W',nick:'',color:'#e34d86'}],events:[{id:'e1',name:'Mini Golf',date:'2026-09-12',venue:'Local mini golf course',status:'completed',notes:'Season opener. Photos and highlights to come.',rules:{first:10,second:7,third:5,other:2},results:{p1:{place:1,raw:42},p2:{place:2,raw:45},p3:{place:3,raw:48},p4:{place:4,raw:51},p5:{place:5,raw:53},p6:{place:6,raw:58}},photos:[],icon:'⛳'},{id:'e2',name:'Go Karting',date:'2026-09-19',venue:'Kart track',status:'completed',notes:'A few close races.',rules:{first:10,second:7,third:5,other:2},results:{p2:{place:1,raw:1},p1:{place:2,raw:2},p4:{place:3,raw:3},p3:{place:4,raw:4},p6:{place:5,raw:5}},photos:[],icon:'🏎️'},{id:'e3',name:'Bowling',date:'2026-10-03',venue:'Bowling alley',status:'upcoming',notes:'',rules:{first:12,second:8,third:4,other:2},results:{},photos:[],icon:'🎳'}]};
+
+let data = clone(defaults), isAdmin = false, currentEvent = null;
+const $ = id => document.getElementById(id);
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function uid(){return 'id'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function setStatus(msg){$('syncStatus').textContent=msg}
+
+// ---------- Shared data (Supabase) ----------
+async function loadData(){
+  if(!configured){
+    try{data=JSON.parse(localStorage.getItem(OLD_KEY))||clone(defaults)}catch{data=clone(defaults)}
+    setStatus('Browser only (not connected)');return;
+  }
+  setStatus('Loading…');
+  const {data:row,error}=await sb.from('league').select('data').eq('id',LEAGUE_ID).maybeSingle();
+  if(error){console.error(error);setStatus('Could not load league');return}
+  if(row&&row.data){data=row.data}
+  else{data=clone(defaults);if(isAdmin)await pushData()}
+  setStatus('Up to date');
+}
+async function pushData(){
+  if(!configured){localStorage.setItem(OLD_KEY,JSON.stringify(data));return true}
+  if(!isAdmin){alert('Log in as an admin to make changes (Rules & Settings page).');await loadData();render();return false}
+  setStatus('Saving…');
+  const {error}=await sb.from('league').upsert({id:LEAGUE_ID,data,updated_at:new Date().toISOString()});
+  if(error){console.error(error);setStatus('Save failed');alert('Could not save: '+error.message);return false}
+  setStatus('Saved ✓');return true;
+}
+function save(){render();return pushData()}
+function requireAdmin(){if(isAdmin)return true;alert('Log in as an admin first (Rules & Settings page).');return false}
+
+// ---------- Photos ----------
+async function compressImage(file,max=1600,quality=.82){
+  try{
+    const img=await createImageBitmap(file);
+    const s=Math.min(1,max/Math.max(img.width,img.height));
+    const c=document.createElement('canvas');c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    return await new Promise(r=>c.toBlob(b=>r(b||file),'image/jpeg',quality));
+  }catch{return file}
+}
+function blobToDataURL(b){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(b)})}
+async function uploadPhoto(file,eventId){
+  const blob=await compressImage(file);
+  if(!configured)return blobToDataURL(blob);
+  const type=blob.type||'image/jpeg', ext=type.split('/')[1]||'jpg';
+  const path=`${eventId}/${uid()}.${ext}`;
+  const {error}=await sb.storage.from(BUCKET).upload(path,blob,{contentType:type});
+  if(error)throw error;
+  return sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+}
+function deletePhoto(url){
+  if(!configured||typeof url!=='string')return;
+  const marker=`/object/public/${BUCKET}/`,i=url.indexOf(marker);
+  if(i<0)return;
+  sb.storage.from(BUCKET).remove([decodeURIComponent(url.slice(i+marker.length))]).catch(console.error);
+}
+// Turns old browser-saved photos (data: URLs) into uploaded photos
+async function migratePhotos(d){
+  for(const ev of d.events||[]){
+    ev.photos=ev.photos||[];
+    for(let i=0;i<ev.photos.length;i++){
+      const p=ev.photos[i];
+      if(typeof p==='string'&&p.startsWith('data:')){
+        setStatus(`Uploading old photos (${ev.name})…`);
+        const blob=await (await fetch(p)).blob();
+        ev.photos[i]=await uploadPhoto(blob,ev.id);
+      }
+    }
+  }
+  return d;
+}
+
+// ---------- Admin login ----------
+function setAdmin(session){
+  isAdmin=!configured||!!session;
+  document.body.classList.toggle('readonly',!isAdmin);
+  $('notConfigured').classList.toggle('hidden',configured);
+  $('loginForm').classList.toggle('hidden',!configured||isAdmin);
+  $('loggedInBox').classList.toggle('hidden',!configured||!isAdmin);
+  $('adminEmail').textContent=session?.user?.email||'';
+  $('loginBtn').textContent=isAdmin?'✓ Admin':'Admin log in';
+  $('loginBtn').classList.toggle('hidden',!configured);
+}
+$('loginForm').onsubmit=async e=>{
+  e.preventDefault();
+  const {data:res,error}=await sb.auth.signInWithPassword({email:$('loginEmail').value.trim(),password:$('loginPass').value});
+  if(error)return alert('Log in failed: '+error.message);
+  $('loginForm').reset();setAdmin(res.session);await loadData();syncSettings();render();
+};
+$('logoutBtn').onclick=async()=>{await sb.auth.signOut();setAdmin(null);render();showView('home')};
+
+// ---------- League maths ----------
+function initials(n){return n.trim().split(/\s+/).map(x=>x[0]).slice(0,2).join('').toUpperCase()}
+function fmtDate(d){if(!d)return 'Date not set';return new Date(d+'T12:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'})}
+function ptsFor(e,place){if(place===1)return +e.rules.first||0;if(place===2)return +e.rules.second||0;if(place===3)return +e.rules.third||0;return +e.rules.other||0}
+function isDone(e){return e.status==='completed'}
+function totals(){return data.players.map(p=>{let points=0,events=0,wins=0;data.events.filter(isDone).forEach(e=>{const r=e.results?.[p.id];if(r){events++;points+=Number(ptsFor(e,Number(r.place)||99));if(Number(r.place)===1)wins++}});return {...p,points,events,wins}})}
+function sortedTotals(){let a=totals(),s=$('boardSort')?.value||'points';return a.sort((x,y)=>s==='name'?x.name.localeCompare(y.name):s==='wins'?y.wins-x.wins||y.points-x.points:y.points-x.points||y.wins-x.wins)}
+function avatar(p){return `<span class="avatar" style="background:${esc(p.color||'#2876dc')}">${esc(initials(p.name))}</span>`}
+function boardRows(){return sortedTotals().map((p,i)=>`<tr><td>${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</td><td><div class="player">${avatar(p)}<span>${esc(p.name)}${p.nick?`<small class="muted"> (${esc(p.nick)})</small>`:''}</span></div></td><td>${p.events}</td><td>${p.wins}</td><td><b>${p.points}</b></td></tr>`).join('')||'<tr><td colspan="5" class="empty">Add players to start your league.</td></tr>'}
+function eventCard(e){let n=Object.keys(e.results||{}).length;return `<div class="eventrow"><div class="thumb">${e.photos?.[0]?`<img src="${esc(e.photos[0])}" alt="Event photo" loading="lazy">`:esc(e.icon||'🏅')}</div><div><div class="eventtitle">${esc(e.name)} <span class="pill">${e.status==='completed'?'Completed':'Upcoming'}</span></div><p>${fmtDate(e.date)}${e.venue?' · '+esc(e.venue):''}</p><p>${n} player result${n===1?'':'s'} · 1st ${e.rules.first}, 2nd ${e.rules.second}, 3rd ${e.rules.third}, others ${e.rules.other}</p></div><div class="rowaction"><button data-event="${esc(e.id)}">View results →</button></div></div>`}
+function ruleText(r){return `<div class="ruleline"><span>🥇 1st place</span><b>${r.first} pts</b></div><div class="ruleline"><span>🥈 2nd place</span><b>${r.second} pts</b></div><div class="ruleline"><span>🥉 3rd place</span><b>${r.third} pts</b></div><div class="ruleline"><span>Everyone else</span><b>${r.other} pts</b></div>`}
+
+// ---------- Rendering ----------
+function render(){
+  document.title=data.league;
+  document.querySelector('.brand').innerHTML=`<span class="cup">🏆</span> ${esc(data.league)}`;
+  $('heroTitle').textContent=data.league;
+  $('seasonLabel').textContent=data.season.toUpperCase();
+  $('homeBoard').innerHTML=boardRows();$('fullBoard').innerHTML=boardRows();
+  const byDate=[...data.events].sort((a,b)=>b.date.localeCompare(a.date));
+  $('recentEvents').innerHTML=byDate.slice(0,4).map(eventCard).join('')||'<div class="empty">No events yet.</div>';
+  $('allEvents').innerHTML=byDate.map(eventCard).join('')||'<div class="empty">No events yet.</div>';
+  const next=data.events.filter(e=>e.status!=='completed').sort((a,b)=>a.date.localeCompare(b.date))[0];
+  $('nextEvent').innerHTML=next?`<div style="display:flex;gap:13px;align-items:center"><div class="thumb" style="width:100px;flex-shrink:0;font-size:35px">${next.photos?.[0]?`<img src="${esc(next.photos[0])}" alt="">`:esc(next.icon||'🏅')}</div><div><h3>${esc(next.name)}</h3><p class="muted small">${fmtDate(next.date)}${next.venue?' · '+esc(next.venue):''}</p></div></div><div class="rules" style="margin:14px 0">${ruleText(next.rules)}</div><button class="primary" data-event="${esc(next.id)}">View event details →</button>`:'<p class="muted">No upcoming events yet.</p><button class="primary editonly" data-view="eventform">＋ Add event</button>';
+  const t=totals();
+  $('seasonStats').innerHTML=`<div class="stat"><span class="muted small">Events completed</span><strong>${data.events.filter(isDone).length}</strong></div><div class="stat"><span class="muted small">Players</span><strong>${data.players.length}</strong></div><div class="stat"><span class="muted small">Total event entries</span><strong>${data.events.filter(isDone).reduce((n,e)=>n+Object.keys(e.results||{}).length,0)}</strong></div><div class="stat"><span class="muted small">Current leader</span><strong style="font-size:16px">${esc(sortedTotals()[0]?.name||'TBD')}</strong></div>`;
+  $('homePlayers').innerHTML=data.players.slice(0,6).map(p=>`<div class="playerbox">${avatar(p)}<div><b>${esc(p.name)}</b><div class="muted small">${t.find(x=>x.id===p.id)?.points||0} pts</div></div></div>`).join('');
+  $('playersList').innerHTML=data.players.map(p=>`<div class="playerbox">${avatar(p)}<div style="min-width:0;flex:1"><b>${esc(p.name)}</b><div class="muted small">${esc(p.nick||'League player')} · ${t.find(x=>x.id===p.id)?.points||0} pts</div></div><button class="editonly" data-remove-player="${esc(p.id)}" title="Remove player">×</button></div>`).join('')||'<div class="empty">No players yet.</div>';
+  if(currentEvent&&$('view-eventdetail').classList.contains('active'))showEvent(currentEvent,true);
+}
+function showView(v,keepForm){
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  $('view-'+v).classList.add('active');
+  document.querySelectorAll('.nav [data-view],.mobilebar [data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(v==='eventform'&&!keepForm)resetEventForm();
+}
+// One click handler for everything, so rerendered buttons keep working
+document.addEventListener('click',e=>{
+  const v=e.target.closest('[data-view]');if(v){showView(v.dataset.view);return}
+  const ev=e.target.closest('[data-event]');if(ev){showEvent(ev.dataset.event);return}
+  const rp=e.target.closest('[data-remove-player]');if(rp)removePlayer(rp.dataset.removePlayer);
+});
+$('boardSort').onchange=render;
+
+// ---------- Event form ----------
+const scoringFields=[['first','1st place'],['second','2nd place'],['third','3rd place'],['other','Everyone else / participation']];
+function drawScoring(r=data.rules){$('scoringFields').innerHTML=scoringFields.map(([k,l])=>`<div class="field"><label>${l} points</label><input type="number" id="rule_${k}" value="${Number(r[k]??0)}" required></div>`).join('')}
+function getRules(){return Object.fromEntries(scoringFields.map(([k])=>[k,Number($('rule_'+k).value)||0]))}
+const resultsTip='<div class="cardhead"><h2>Enter player results</h2><span class="pill">OPTIONAL</span></div><p class="muted small">Save the event first, then edit results from its details page.</p><div class="notice">Tip: for mini golf, enter strokes as the raw score, then select each player’s finishing position. Lowest strokes wins.</div>';
+function resetEventForm(){$('eventForm').reset();$('eventId').value='';$('eventFormTitle').textContent='＋ Create an event';$('deleteEvent').classList.add('hidden');$('eventCompleted').checked=false;drawScoring(data.rules);$('eventDate').value=new Date().toISOString().slice(0,10);$('resultsEditor').innerHTML=resultsTip}
+$('resetScoring').onclick=()=>drawScoring(data.rules);
+$('eventForm').addEventListener('submit',async ev=>{
+  ev.preventDefault();
+  if(!requireAdmin())return;
+  const id=$('eventId').value||uid(), files=[...$('eventPhotos').files], btn=$('saveEventBtn');
+  btn.disabled=true;
+  const newPhotos=[];
+  try{
+    for(const [i,f] of files.entries()){btn.textContent=`Uploading photo ${i+1} of ${files.length}…`;newPhotos.push(await uploadPhoto(f,id))}
+  }catch(err){console.error(err);alert('Photo upload failed: '+(err.message||err));btn.disabled=false;btn.textContent='Save event';return}
+  const old=data.events.find(e=>e.id===id);
+  const e={id,name:$('eventName').value.trim(),date:$('eventDate').value,venue:$('eventVenue').value.trim(),status:($('eventCompleted').checked||$('eventStatus').value==='completed')?'completed':'upcoming',notes:$('eventNotes').value.trim(),rules:getRules(),results:old?.results||{},photos:[...(old?.photos||[]),...newPhotos],icon:old?.icon||'🏅'};
+  const i=data.events.findIndex(x=>x.id===id);if(i>=0)data.events[i]=e;else data.events.push(e);
+  btn.textContent='Saving…';
+  await save();
+  btn.disabled=false;btn.textContent='Save event';
+  showEvent(id);
+});
+function editEvent(id){
+  const e=data.events.find(x=>x.id===id);if(!e)return;
+  showView('eventform',true);
+  $('eventId').value=e.id;$('eventName').value=e.name;$('eventDate').value=e.date;$('eventVenue').value=e.venue||'';$('eventStatus').value=e.status;$('eventNotes').value=e.notes||'';$('eventCompleted').checked=e.status==='completed';$('eventPhotos').value='';
+  $('eventFormTitle').textContent='Edit event: '+e.name;$('deleteEvent').classList.remove('hidden');drawScoring(e.rules);
+  $('resultsEditor').innerHTML=`<div class="cardhead"><h2>Player results</h2><span class="pill">EDIT SCORES</span></div><p class="muted small">Set each player's finishing place and raw score. Points calculate automatically from this event's rules.</p><div class="scoregrid"><div class="scorehead">Player</div><div class="scorehead">Place</div><div class="scorehead">Raw score</div>${data.players.map(p=>{const r=e.results?.[p.id]||{};return `<div class="player" style="padding:6px 0">${avatar(p)}<span>${esc(p.name)}</span></div><select data-place="${esc(p.id)}"><option value="">No result</option>${data.players.map((_,i)=>`<option value="${i+1}" ${Number(r.place)===i+1?'selected':''}>${i+1}${['st','nd','rd'][i]||'th'}</option>`).join('')}</select><input data-raw="${esc(p.id)}" type="number" min="0" step="any" value="${r.raw??''}" placeholder="Score">`}).join('')}</div><div class="actions" style="margin-top:15px"><button class="primary" id="saveResults">Save results & recalculate points</button></div><hr style="border:0;border-top:1px solid var(--line);margin:20px 0"><h3>Event photos</h3><div class="photo-grid" style="margin-top:12px">${(e.photos||[]).map((p,i)=>`<div><img src="${esc(p)}" alt="Event photo"><button data-photo-remove="${i}" style="width:100%;margin-top:4px">Remove</button></div>`).join('')||'<p class="muted small">No photos yet. Add some with the Photos field above.</p>'}</div>`;
+  $('saveResults').onclick=async()=>{
+    if(!requireAdmin())return;
+    const ev=data.events.find(x=>x.id===id);if(!ev)return;
+    const results={};
+    data.players.forEach(p=>{const place=Number(document.querySelector(`[data-place="${p.id}"]`).value),raw=document.querySelector(`[data-raw="${p.id}"]`).value;if(place)results[p.id]={place,raw:raw===''?null:Number(raw),points:ptsFor(ev,place)}});
+    ev.results=results;ev.status='completed';
+    await save();showEvent(id);
+  };
+  document.querySelectorAll('[data-photo-remove]').forEach(b=>b.onclick=async()=>{
+    if(!requireAdmin())return;
+    const ev=data.events.find(x=>x.id===id);if(!ev)return;
+    const [url]=ev.photos.splice(Number(b.dataset.photoRemove),1);deletePhoto(url);
+    await save();editEvent(id);
+  });
+}
+async function deleteEventById(id){
+  if(!requireAdmin()||!confirm('Delete this event and its results?'))return;
+  const e=data.events.find(x=>x.id===id);(e?.photos||[]).forEach(deletePhoto);
+  data.events=data.events.filter(x=>x.id!==id);currentEvent=null;
+  await save();showView('events');
+}
+$('deleteEvent').onclick=()=>deleteEventById($('eventId').value);
+function showEvent(id,quiet){
+  const e=data.events.find(x=>x.id===id);if(!e)return;
+  currentEvent=id;if(!quiet)showView('eventdetail');
+  const rows=data.players.filter(p=>e.results?.[p.id]).sort((a,b)=>Number(e.results[a.id].place)-Number(e.results[b.id].place)).map(p=>{const r=e.results[p.id];return `<tr><td>${r.place===1?'🥇':r.place===2?'🥈':r.place===3?'🥉':r.place}</td><td><div class="player">${avatar(p)}${esc(p.name)}</div></td><td>${r.raw??'–'}</td><td><b>${ptsFor(e,r.place)} pts</b></td></tr>`}).join('');
+  $('eventDetail').innerHTML=`<div class="eventdetail"><div><span class="pill">${e.status==='completed'?'COMPLETED':'UPCOMING'}</span><h1 style="margin:10px 0 3px">${esc(e.name)}</h1><p class="muted">${fmtDate(e.date)}${e.venue?' · '+esc(e.venue):''}</p></div>${e.notes?`<div><h3>Event recap</h3><p>${esc(e.notes).replace(/\n/g,'<br>')}</p></div>`:''}<div><h3>Scoring rules for this event</h3><div class="rules" style="margin-top:10px">${ruleText(e.rules)}</div></div><div><h3>Results</h3><div class="tablewrap"><table><thead><tr><th>Place</th><th>Player</th><th>Raw score</th><th>League points</th></tr></thead><tbody>${rows||'<tr><td colspan="4" class="empty">No results entered yet.</td></tr>'}</tbody></table></div></div><div><h3>Photos</h3><div class="photo-grid" style="margin-top:10px">${(e.photos||[]).map(p=>`<a href="${esc(p)}" target="_blank" rel="noopener"><img src="${esc(p)}" alt="Event photo" loading="lazy"></a>`).join('')||'<p class="muted">No photos added yet.</p>'}</div></div></div>`;
+  $('editCurrent').onclick=()=>editEvent(id);
+  $('deleteCurrent').onclick=()=>deleteEventById(id);
+}
+
+// ---------- Players ----------
+$('addPlayerBtn').onclick=()=>{$('playerForm').classList.remove('hidden');$('playerName').focus()};
+$('cancelPlayer').onclick=()=>{$('playerForm').reset();$('playerForm').classList.add('hidden')};
+$('playerForm').onsubmit=e=>{e.preventDefault();if(!requireAdmin())return;const name=$('playerName').value.trim();if(!name)return;const colors=['#2876dc','#16a879','#c28a55','#8b61c2','#e34d86','#d7a91e'];data.players.push({id:uid(),name,nick:$('playerNick').value.trim(),color:colors[data.players.length%colors.length]});save();$('playerForm').reset();$('playerForm').classList.add('hidden')};
+function removePlayer(id){if(!requireAdmin()||!confirm('Remove this player and their recorded results?'))return;data.players=data.players.filter(p=>p.id!==id);data.events.forEach(ev=>{if(ev.results)delete ev.results[id]});save()}
+
+// ---------- Settings, backups ----------
+function syncSettings(){$('leagueName').value=data.league;$('seasonName').value=data.season;$('default1').value=data.rules.first;$('default2').value=data.rules.second;$('default3').value=data.rules.third;$('defaultOther').value=data.rules.other}
+$('settingsForm').onsubmit=async e=>{e.preventDefault();if(!requireAdmin())return;data.league=$('leagueName').value.trim()||'Nuggets MultiSports League';data.season=$('seasonName').value.trim()||'Season 1';data.rules={first:+$('default1').value,second:+$('default2').value,third:+$('default3').value,other:+$('defaultOther').value};if(await save())alert('League settings saved.')};
+function download(name,content,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+$('exportBtn').onclick=()=>download('nml-backup.json',JSON.stringify(data,null,2),'application/json');
+async function importLeague(d){
+  if(!d||!d.players||!d.events)throw Error('bad file');
+  data=await migratePhotos(d);
+  if(await save()){syncSettings();drawScoring(data.rules);alert('League data uploaded.')}
+}
+$('importBtn').onclick=()=>{if(requireAdmin())$('importFile').click()};
+$('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{await importLeague(JSON.parse(await f.text()))}catch(err){console.error(err);alert('That file does not look like a NML backup.')}e.target.value=''};
+$('migrateLocal').onclick=async()=>{
+  if(!requireAdmin())return;
+  let old=null;try{old=JSON.parse(localStorage.getItem(OLD_KEY))}catch{}
+  if(!old)return alert("No old league data found in this browser. Try this button on the phone or laptop you used for testing.");
+  if(!confirm('Replace the shared league with the data saved in this browser?'))return;
+  try{await importLeague(old)}catch(err){console.error(err);alert('Could not move the data: '+(err.message||err))}
+};
+$('resetDemo').onclick=async()=>{if(requireAdmin()&&confirm('Replace current data with the sample league? Export a backup first if needed.')){data=clone(defaults);await save();syncSettings();drawScoring(data.rules)}};
+$('clearAll').onclick=async()=>{if(requireAdmin()&&confirm('Delete all league data for everyone? This cannot be undone unless you exported a backup.')){data={league:'Nuggets MultiSports League',season:'Season 1',rules:{first:10,second:7,third:5,other:2},players:[],events:[]};await save();syncSettings()}};
+$('exportCsv').onclick=()=>{const lines=[['Rank','Player','Events','Wins','Points'],...sortedTotals().map((p,i)=>[i+1,p.name,p.events,p.wins,p.points])];download('nml-leaderboard.csv',lines.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n'),'text/csv')};
+
+// ---------- Start up ----------
+async function start(){
+  if(configured){
+    const {data:{session}}=await sb.auth.getSession();
+    setAdmin(session);
+    sb.auth.onAuthStateChange((_evt,s)=>{setAdmin(s);render()});
+  }else setAdmin(null);
+  await loadData();syncSettings();drawScoring(data.rules);resetEventForm();render();
+  if(configured){
+    // Live updates: when anyone saves, everyone's screen refreshes
+    sb.channel('league-live').on('postgres_changes',{event:'*',schema:'public',table:'league',filter:'id=eq.'+LEAGUE_ID},p=>{
+      if(!p.new?.data)return;
+      data=p.new.data;render();
+      if(!$('view-settings').classList.contains('active'))syncSettings();
+      setStatus('Up to date');
+    }).subscribe();
+    document.addEventListener('visibilitychange',async()=>{if(document.visibilityState==='visible'&&!$('view-eventform').classList.contains('active')){await loadData();render()}});
+  }
+}
+start();
+</script></body></html>
